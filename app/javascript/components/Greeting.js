@@ -1,15 +1,28 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchGreetings, greetingSlice} from '../redux/greetings/greetingSlice';
 
-function Greeting() {
-  const [message, setMessage] = useState('');
+const Greetings = () => {
+  const dispatch = useDispatch();
+  const {loading, greeting, error} = useSelector((state) => state.greetings);
 
   useEffect(() => {
-    fetch('/api/greetings/random')
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message));
-  }, []);
+    dispatch(fetchGreetings());
+  }, [dispatch]);
 
-  return <h1>{message}</h1>;
-}
+  if (loading) {
+    return <p>Loading...</p>;
+  }
 
-export default Greeting;
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  return (
+    <div>
+      <p>{greeting}</p>
+    </div>
+  );
+};
+
+export default Greetings;
