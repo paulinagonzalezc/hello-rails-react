@@ -1,7 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 function Greeting() {
-  return <h1>Welcome to my app!</h1>;
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    fetch('/api/greetings/random')
+      .then((response) => response.json())
+      .then((data) => setMessage(data.message));
+  }, []);
+
+  return <h1>{message}</h1>;
 }
 
 export default Greeting;
