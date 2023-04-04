@@ -22,9 +22,9 @@ const greetingSlice = createSlice({
   initialState,
   reducers: {
     updateGreeting(state, action) {
-    return {
-        ...state,
-        greeting: action.payload,
+      return {
+          ...state,
+          greeting: action.payload,
       };
     },
   },
